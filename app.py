@@ -80,3 +80,7 @@ async def fetch_title(url: str):
     Example: /get-title/?url=https://www.google.com
     """
     return {"url": url, "title": get_webpage_title(url)}
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.20", port=7860)
