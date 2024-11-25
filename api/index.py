@@ -1,7 +1,7 @@
 from flask import Flask, jsonify, request
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
-from webdriver_manager import ChromeDriverManager
+from webdriver_manager import chrome
 from selenium.webdriver.chrome.options import Options
 
 app = Flask(__name__)
@@ -21,7 +21,7 @@ def get_webpage_title(url: str) -> str:
         chrome_options.add_argument("--disable-dev-shm-usage")
         
         # Start ChromeDriver service
-        service = Service(ChromeDriverManager().install())
+        service = Service(chrome.ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
         
         # Open the webpage
