@@ -30,7 +30,7 @@ def get_webpage_title(url: str) -> str:
 
         # chrome_options.binary_location = "./chrome.exe"
         chrome_driver_binary ='./chromedriver.exe'
-        service = Service(executable_path=chrome_driver_binary)
+        service = Service(executable_path=chrome.ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
         # chrome_driver_binary = "/usr/local/bin/chromedriver"
 # driver = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
