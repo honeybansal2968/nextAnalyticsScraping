@@ -81,6 +81,6 @@ async def fetch_title(url: str):
     """
     return {"url": url, "title": get_webpage_title(url)}
 
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="127.0.0.20", port=7860)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.20", port=7860)
