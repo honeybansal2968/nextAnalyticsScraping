@@ -1,6 +1,7 @@
 from flask import Flask, jsonify, request
 from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
+from webdriver_manager import ChromeDriverManager
 from selenium.webdriver.chrome.options import Options
 import os
 
@@ -11,7 +12,6 @@ from flask_cors import CORS
 CORS(app)
 
 # Configure Selenium
-CHROMEDRIVER_PATH = './chromedriver.exe'
 
 def get_webpage_title(url: str) -> str:
     try:
@@ -22,7 +22,7 @@ def get_webpage_title(url: str) -> str:
         chrome_options.add_argument("--disable-dev-shm-usage")
         
         # Start ChromeDriver service
-        service = Service(CHROMEDRIVER_PATH)
+        service = Service(ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
         
         # Open the webpage
