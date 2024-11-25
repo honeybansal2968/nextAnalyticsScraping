@@ -11,7 +11,7 @@ from flask_cors import CORS
 CORS(app)
 
 # Configure Selenium
-CHROMEDRIVER_PATH = os.path.join(os.path.dirname(os.path.abspath(__file__)), "chromedriver.exe")
+CHROMEDRIVER_PATH = './chromedriver.exe'
 
 def get_webpage_title(url: str) -> str:
     try:
