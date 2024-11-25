@@ -3,6 +3,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.service import Service
 from webdriver_manager import chrome
 from selenium.webdriver.chrome.options import Options
+from fake_headers import Headers
 
 app = Flask(__name__)
 
@@ -11,18 +12,32 @@ from flask_cors import CORS
 CORS(app)
 
 # Configure Selenium
-
 def get_webpage_title(url: str) -> str:
     try:
+        header = Headers().generate()["User-Agent"]
+
         # Configure Chrome options for headless mode
         chrome_options = Options()
-        chrome_options.add_argument("--headless")
         chrome_options.add_argument("--no-sandbox")
         chrome_options.add_argument("--disable-dev-shm-usage")
-        
-        # Start ChromeDriver service
-        service = Service(chrome.ChromeDriverManager().install())
+        chrome_options.add_argument("--ignore-certificate-errors")
+        chrome_options.add_argument("--disable-gpu")
+        chrome_options.add_argument("--log-level=3")
+        chrome_options.add_argument("--disable-notifications")
+        chrome_options.add_argument("--disable-popup-blocking")
+        chrome_options.add_argument("--user-agent={}".format(header))
+        chrome_options.add_argument("--headless")
+
+        # chrome_options.binary_location = "./chrome.exe"
+        # chrome_driver_binary ='./chromedriver.exe'
+        service = Service(executable_path=chrome.ChromeDriverManager().install())
         driver = webdriver.Chrome(service=service, options=chrome_options)
+        # chrome_driver_binary = "/usr/local/bin/chromedriver"
+# driver = webdriver.Chrome(chrome_driver_binary, chrome_options=options)
+        # Start ChromeDriver service
+        
+        # driver = webdriver.Chrome(service=service, options=chrome_options)
+
         
         # Open the webpage
         driver.get(url)
