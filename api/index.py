@@ -11,6 +11,7 @@ from webdriver_manager.core.driver_cache import DriverCacheManager
 app = Flask(__name__)
 CORS(app)
 
+
 # Set custom WebDriver cache directory
 custom_wdm_cache = os.path.join(os.getcwd(), 'custom_wdm_cache')
 os.environ['WDM_LOCAL'] = custom_wdm_cache
