@@ -21,9 +21,10 @@ def setup_chromedriver():
     # cache_manager=DriverCacheManager(custom_wdm_cache)
     # path=GeckoDriverManager(cache_manager=cache_manager).install()
     # # Ensure the driver is executable
-    # os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
+    path = 'custom_wdm_cache/.wdm/drivers/geckodriver/win64/v0.35.0/geckodriver.exe'
+    os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
     # print("Driver path:", path)
-    return 'custom_wdm_cache/.wdm/drivers/geckodriver/win64/v0.35.0/geckodriver.exe'
+    return path
 
 
 # Configure Selenium
