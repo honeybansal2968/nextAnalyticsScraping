@@ -41,6 +41,7 @@ def get_webpage_title(url: str) -> str:
         chrome_options.add_argument("--log-level=3")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--disable-popup-blocking")
+        chrome_options.binary_location = "chrome-linux64/chrome"
 
         # Install the WebDriver and set permissions
         driver_path = setup_chromedriver()
