@@ -18,12 +18,12 @@ os.environ['WDM_LOCAL'] = custom_wdm_cache
 # Function to install the driver and set executable permissions
 def setup_chromedriver():
     
-    cache_manager=DriverCacheManager(custom_wdm_cache)
-    path=GeckoDriverManager(cache_manager=cache_manager).install()
-    # Ensure the driver is executable
-    os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
-    print("Driver path:", path)
-    return path
+    # cache_manager=DriverCacheManager(custom_wdm_cache)
+    # path=GeckoDriverManager(cache_manager=cache_manager).install()
+    # # Ensure the driver is executable
+    # os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
+    # print("Driver path:", path)
+    return 'custom_wdm_cache/.wdm/drivers/geckodriver/win64/v0.35.0/geckodriver.exe'
 
 
 # Configure Selenium
