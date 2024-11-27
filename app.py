@@ -21,7 +21,7 @@ def setup_chromedriver():
     # cache_manager=DriverCacheManager(custom_wdm_cache)
     # path=GeckoDriverManager(cache_manager=cache_manager).install()
     # # Ensure the driver is executable
-    path = 'custom_wdm_cache/.wdm/drivers/geckodriver/win64/v0.35.0/geckodriver.exe'
+    path = 'custom_wdm_cache/.wdm/drivers/geckodriver/win64/v0.35.0/geckodriver'
     os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
     # print("Driver path:", path)
     return path
@@ -42,7 +42,7 @@ def get_webpage_title(url: str) -> str:
         chrome_options.add_argument("--log-level=3")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--disable-popup-blocking")
-        chrome_options.binary_location = "133.0/firefox.exe"
+        chrome_options.binary_location = "firefox/firefox"
         # Install the WebDriver and set permissions
         driver_path = setup_chromedriver()
         service = Service(executable_path=driver_path)
