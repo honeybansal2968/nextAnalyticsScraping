@@ -2,15 +2,14 @@ import os
 import stat
 from flask import Flask, jsonify, request
 from selenium import webdriver
-from selenium.webdriver.chrome.service import Service
-from webdriver_manager.chrome import ChromeDriverManager
-from selenium.webdriver.chrome.options import Options
+from selenium.webdriver.firefox.service import Service
+from webdriver_manager.firefox import DriverManager
+from selenium.webdriver.firefox.options import Options
 from fake_headers import Headers
 from flask_cors import CORS
 from webdriver_manager.core.driver_cache import DriverCacheManager
 app = Flask(__name__)
 CORS(app)
-
 
 # Set custom WebDriver cache directory
 custom_wdm_cache = os.path.join(os.getcwd(), 'custom_wdm_cache')
@@ -19,12 +18,13 @@ os.environ['WDM_LOCAL'] = custom_wdm_cache
 # Function to install the driver and set executable permissions
 def setup_chromedriver():
     
-    # cache_manager=DriverCacheManager(custom_wdm_cache)
-    # path=ChromeDriverManager(cache_manager=cache_manager).install()
+    cache_manager=DriverCacheManager(custom_wdm_cache)
+    path=DriverManager(cache_manager=cache_manager).install()
     # Ensure the driver is executable
-    # os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
-    # print("Driver path:", path)
-    return 'custom_wdm_cache/.wdm/drivers/chromedriver/chromedriver-linux64/chromedriver'
+    os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
+    print("Driver path:", path)
+    return path
+
 
 # Configure Selenium
 def get_webpage_title(url: str) -> str:
@@ -41,14 +41,13 @@ def get_webpage_title(url: str) -> str:
         chrome_options.add_argument("--log-level=3")
         chrome_options.add_argument("--disable-notifications")
         chrome_options.add_argument("--disable-popup-blocking")
-        chrome_options.binary_location = "chrome-linux64/chrome"
-
+        chrome_options.binary_location = "133.0/firefox.exe"
         # Install the WebDriver and set permissions
-        driver_path = setup_chromedriver()
-        service = Service(executable_path=driver_path)
+        # driver_path = setup_chromedriver()
+        # service = Service(executable_path=driver_path)
 
         # Initialize the WebDriver
-        driver = webdriver.Chrome(service=service, options=chrome_options)
+        driver = webdriver.Firefox( options=chrome_options)
 
         # Open the webpage
         driver.get(url)
@@ -71,7 +70,7 @@ def home():
 def fetch_title():
     """
     Fetch the title of a webpage by URL.
-    Example: /get-title/?url=https://www.google.com
+    Example: /get-title/?url=https://www.reddit.com
     """
     url = request.args.get("url")
     if not url:
