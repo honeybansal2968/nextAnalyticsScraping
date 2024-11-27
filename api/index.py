@@ -19,12 +19,12 @@ os.environ['WDM_LOCAL'] = custom_wdm_cache
 # Function to install the driver and set executable permissions
 def setup_chromedriver():
     
-    cache_manager=DriverCacheManager(custom_wdm_cache)
-    path=ChromeDriverManager(cache_manager=cache_manager).install()
+    # cache_manager=DriverCacheManager(custom_wdm_cache)
+    # path=ChromeDriverManager(cache_manager=cache_manager).install()
     # Ensure the driver is executable
-    os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
-    print("Driver path:", path)
-    return 'custom_wdm_cache/.wdm/drivers/chromedriver/win64/131.0.6778.85/chromedriver-win32/chromedriver.exe'
+    # os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
+    # print("Driver path:", path)
+    return 'custom_wdm_cache/.wdm/drivers/chromedriver/chromedriver-linux64/chromedriver'
 
 # Configure Selenium
 def get_webpage_title(url: str) -> str:
