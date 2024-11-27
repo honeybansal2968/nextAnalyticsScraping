@@ -3,7 +3,7 @@ import stat
 from flask import Flask, jsonify, request
 from selenium import webdriver
 from selenium.webdriver.firefox.service import Service
-from webdriver_manager.firefox import DriverManager
+from webdriver_manager.firefox import GeckoDriverManager
 from selenium.webdriver.firefox.options import Options
 from fake_headers import Headers
 from flask_cors import CORS
@@ -19,7 +19,7 @@ os.environ['WDM_LOCAL'] = custom_wdm_cache
 def setup_chromedriver():
     
     cache_manager=DriverCacheManager(custom_wdm_cache)
-    path=DriverManager(cache_manager=cache_manager).install()
+    path=GeckoDriverManager(cache_manager=cache_manager).install()
     # Ensure the driver is executable
     os.chmod(path, stat.S_IRWXU)  # chmod +x for the owner
     print("Driver path:", path)
@@ -43,11 +43,11 @@ def get_webpage_title(url: str) -> str:
         chrome_options.add_argument("--disable-popup-blocking")
         chrome_options.binary_location = "133.0/firefox.exe"
         # Install the WebDriver and set permissions
-        # driver_path = setup_chromedriver()
-        # service = Service(executable_path=driver_path)
+        driver_path = setup_chromedriver()
+        service = Service(executable_path=driver_path)
 
         # Initialize the WebDriver
-        driver = webdriver.Firefox( options=chrome_options)
+        driver = webdriver.Firefox(service=service, options=chrome_options)
 
         # Open the webpage
         driver.get(url)
