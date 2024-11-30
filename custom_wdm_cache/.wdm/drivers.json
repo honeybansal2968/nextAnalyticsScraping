@@ -2,5 +2,9 @@
     "win64_geckodriver_v0.35.0_for_": {
         "timestamp": "27/11/2024",
         "binary_path": "D:\\work\\nextAnalyticsScraping\\custom_wdm_cache\\.wdm\\drivers\\geckodriver\\win64\\v0.35.0\\geckodriver.exe"
+    },
+    "win64_chromedriver_131.0.6778.85_for_131.0.6778": {
+        "timestamp": "30/11/2024",
+        "binary_path": "D:\\work2\\nextAnalyticsScraping\\custom_wdm_cache\\.wdm\\drivers\\chromedriver\\win64\\131.0.6778.85\\chromedriver-win32/chromedriver.exe"
     }
 }
