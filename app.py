@@ -386,3 +386,213 @@ async def fetch_title(url: str):
 
 # if __name__ == "__main__":
 #     app.run(debug=True, port=3000)
+
+
+
+# import os
+# from flask import Flask, request, jsonify
+# from selenium import webdriver
+# from selenium.webdriver.firefox.service import Service
+# from selenium.webdriver.firefox.options import Options
+# from selenium.webdriver.common.by import By
+# from selenium.webdriver.support.ui import WebDriverWait
+# from selenium.webdriver.support import expected_conditions as EC
+# from webdriver_manager.firefox import GeckoDriverManager
+# import time
+# import random
+
+# app = Flask(__name__)
+
+# def setup_driver():
+#     """Set up Chrome WebDriver with appropriate options for headless browsing."""
+#     chrome_options = Options()
+#     # chrome_options.add_argument("--headless")
+#     # chrome_options.add_argument("--incognito")
+#     # chrome_options.add_argument("--disable-blink-features=AutomationControlled")
+#     # chrome_options.add_experimental_option("excludeSwitches", ["enable-automation"])
+#     # chrome_options.add_experimental_option('useAutomationExtension', False)
+#     chrome_options.add_argument("--start-maximized")
+#     chrome_options.add_argument("--no-sandbox")
+#     # chrome_options.add_argument("--disable-dev-shm-usage")
+#     # chrome_options.add_argument("--disable-extensions")
+#     # chrome_options.add_argument("--disable-gpu")
+#     chrome_options.binary_location = r'C:\Users\HP\.cache\selenium\firefox\win64\133.0\firefox.exe'
+#     # chrome_options.binary_location = r'C:\Program Files\Google\Chrome\Application\chrome.exe'
+
+    
+#     # service = Service(GeckoDriverManager().install())
+#     service = Service(executable_path=r'C:\Users\HP\.cache\selenium\geckodriver\win64\0.35.0\geckodriver.exe')
+    
+#     driver = webdriver.Firefox(service=service, options=chrome_options)
+#     return driver
+
+# def reddit_login_and_scrape(username, password, subreddit):
+#     """
+#     Log into Reddit and scrape posts from a specified subreddit.
+    
+#     Args:
+#         username (str): Reddit username
+#         password (str): Reddit password
+#         subreddit (str): Name of the subreddit to scrape
+    
+#     Returns:
+#         list: List of dictionaries containing scraped post information
+#     """
+#     driver = setup_driver()
+#     posts = []
+    
+#     try:
+#         # Navigate to Reddit login page
+#         driver.get("https://www.reddit.com/login/")
+        
+#         # Wait for login form to load
+#         WebDriverWait(driver, 10).until(
+#             EC.presence_of_element_located((By.ID, "login-username"))
+#         )
+        
+#         # Find and fill in login credentials
+#         username_field = driver.find_element(By.ID, "login-username")
+#         password_field = driver.find_element(By.ID, "login-password")
+        
+#         username_field.send_keys(username)
+#         password_field.send_keys(password)
+        
+#         # Submit login form
+#         # login_button = driver.find_element(By.XPATH, "//button[@type='button']")
+#         # login_button.click()
+#         # Find login button using complex selector
+#         # login_button=driver.find_element(By.CSS_SELECTOR, 'faceplate-tracker[action="click]')
+#         # login_button = WebDriverWait(driver, 4).until(
+#         #     EC.element_to_be_clickable((By.XPATH, "//*[@id='login']/auth-flow-modal/div[2]/faceplate-tracker/button"))
+#         # )
+#         # driver.execute_script("arguments[0].scrollIntoView(true);", login_button)
+#         # time.sleep(random.uniform(1, 2))
+#         # login_button.click()
+#         # Locate the button using XPath with visible text
+#         cookies = driver.get_cookies()
+
+#         auth_token = None
+
+#         for cookie in cookies:
+#             if cookie["name"] == "auth_token":
+#                 auth_token = cookie["value"]
+#                 break
+#         print("auth_token", auth_token)
+#         # wait = WebDriverWait(driver, 10)
+#         # login_button = wait.until(EC.element_to_be_clickable((By.XPATH, '//button[.//span[contains(text(), "Log In")]]')))
+
+#         # # Click the button
+#         # login_button.click()
+
+#         # //*[@id="login"]/auth-flow-modal/div[2]/faceplate-tracker/button
+#         # Wait for login to complete
+#         # WebDriverWait(driver, 10).until(
+#         #     EC.presence_of_element_located((By.XPATH, "//a[@href='/submit']"))
+#         # )
+        
+#         # # Add random delay to mimic human behavior
+#         time.sleep(random.uniform(2, 4))
+        
+#         # # # Navigate to subreddit
+#         # driver.get(f"https://www.reddit.com/r/{subreddit}/")
+        
+#         # # # Wait for posts to load
+#         # WebDriverWait(driver, 10).until(
+#         #     EC.presence_of_element_located((By.CSS_SELECTOR, "div[data-testid='post-container']"))
+#         # )
+        
+#         # # Find post elements
+#         # post_elements = driver.find_elements(By.CSS_SELECTOR, "div[data-testid='post-container']")
+        
+#         # # Iterate through posts
+#         # for post in post_elements[:10]:  # Limit to 10 posts
+#         #     try:
+#         #         # Extract post details
+#         #         title = post.find_element(By.CSS_SELECTOR, "h3").text
+                
+#         #         # Try to get upvotes
+#         #         try:
+#         #             upvotes = post.find_element(By.CSS_SELECTOR, "div[id^='vote-arrows-']").text
+#         #         except:
+#         #             upvotes = "N/A"
+                
+#         #         # Try to get link
+#         #         try:
+#         #             link = post.find_element(By.CSS_SELECTOR, "a[data-click-id='body']").get_attribute('href')
+#         #         except:
+#         #             link = "No link available"
+                
+#         #         posts.append({
+#         #             "title": title,
+#         #             "upvotes": upvotes,
+#         #             "link": link
+#         #         })
+            
+#         #     except Exception as post_error:
+#         #         print(f"Error processing individual post: {post_error}")
+        
+#     except Exception as e:
+#         print(f"Login or scraping error: {e}")
+#         return [{"error": str(e)}]
+    
+#     finally:
+#         driver.quit()
+    
+#     return posts
+
+# @app.route('/scrape', methods=['POST'])
+# def scrape_reddit():
+#     """
+#     Flask endpoint for scraping Reddit posts
+    
+#     Expected JSON payload:
+#     {
+#         "username": "your_reddit_username",
+#         "password": "your_reddit_password",
+#         "subreddit": "technology"
+#     }
+#     """
+#     # Get data from request
+#     data = request.json
+    
+#     # Validate input
+#     if not all(key in data for key in ['subreddit']):
+#         return jsonify({
+#             "error": "Missing required parameters. subreddit"
+#         }), 400
+    
+#     try:
+#         # Perform scraping
+#         results = reddit_login_and_scrape(
+#             'Final-Difference7055', 
+#             '#CW2968honey', 
+#             data['subreddit']
+#         )
+        
+#         # Check for errors
+#         if results and 'error' in results[0]:
+#             return jsonify({
+#                 "error": results[0]['error']
+#             }), 500
+        
+#         return jsonify({
+#             "posts": results
+#         }), 200
+    
+#     except Exception as e:
+#         return jsonify({
+#             "error": str(e)
+#         }), 500
+
+# @app.route('/', methods=['GET'])
+# def health_check():
+#     """Simple health check endpoint"""
+#     return jsonify({
+#         "status": "healthy",
+#         "message": "Reddit Scraper API is running"
+#     }), 200
+
+# if __name__ == '__main__':
+#     # Use environment variable for port, default to 5000
+#     port = int(os.environ.get('PORT', 5000))
+#     app.run(host='127.0.0.34', port=port,debug=True)
